@@ -1,2 +1,2 @@
 # lucene-index
-lucent index, such as es
+lucene index, such as elasticsearch
