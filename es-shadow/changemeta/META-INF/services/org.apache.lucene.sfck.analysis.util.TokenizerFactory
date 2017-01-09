@@ -1,0 +1,15 @@
+# lucene-analyzers-common-5.5.2.jar
+org.apache.lucene.sfck.analysis.core.KeywordTokenizerFactory
+org.apache.lucene.sfck.analysis.core.LetterTokenizerFactory
+org.apache.lucene.sfck.analysis.core.LowerCaseTokenizerFactory
+org.apache.lucene.sfck.analysis.core.WhitespaceTokenizerFactory
+org.apache.lucene.sfck.analysis.ngram.EdgeNGramTokenizerFactory
+org.apache.lucene.sfck.analysis.ngram.NGramTokenizerFactory
+org.apache.lucene.sfck.analysis.path.PathHierarchyTokenizerFactory
+org.apache.lucene.sfck.analysis.pattern.PatternTokenizerFactory
+org.apache.lucene.sfck.analysis.standard.ClassicTokenizerFactory
+org.apache.lucene.sfck.analysis.standard.StandardTokenizerFactory
+org.apache.lucene.sfck.analysis.standard.UAX29URLEmailTokenizerFactory
+org.apache.lucene.sfck.analysis.th.ThaiTokenizerFactory
+org.apache.lucene.sfck.analysis.wikipedia.WikipediaTokenizerFactory
+

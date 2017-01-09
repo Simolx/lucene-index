@@ -1,0 +1,5 @@
+rootProject.name = 'lucene-index'
+include 'es-fat'
+include 'es-shadow'
+include 'es-index'
+

@@ -1,0 +1,115 @@
+group 'cn.sfck'
+version '2.4.1-SNAPSHOT'
+
+
+buildscript {
+    repositories {
+       maven {
+           url 'http://localhost:18081/repository/jcenter-com/'
+       }
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+//sourceCompatibility = 1.5
+//
+//repositories {
+//    mavenCentral()
+//}
+def nexusUrl ="http://localhost:18081/repository/maven-releases/"
+//如果为快照版本发布到Maven Nexus私服的快照库
+if(version.endsWith("-SNAPSHOT")) {
+    nexusUrl ="http://localhost:18081/repository/maven-snapshots/"
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+//    compile files("libs/*.jar")
+//    compile group: 'cn.sfck', name: 'es-fat', version: "$elasticVersion"
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: "$elasticVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+jar {
+//  zip64 true
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+shadowJar {
+//    configurations = [project.configurations.compile]
+//    dependencies {
+//        include ( dependency("cn.sfck:es-fat:$elasticVersion"))
+//    }
+    relocate 'com.google', 'com.google.sfck'
+    relocate 'com.fasterxml', 'com.fasterxml.sfck'
+    relocate 'org.apache.lucene', 'org.apache.lucene.sfck'
+    relocate 'org.elasticsearch', 'org.elasticsearch.sfck'
+    relocate 'org.joda', 'org.joda.sfck'
+}
+
+task updateJar(type: Exec) {
+    workingDir './'
+    commandLine "bash", "-c", "jar -uvf build/libs/es-shadow-$version-all.jar -C changemeta  META-INF "
+//    executable 'sh'
+//    args  "./updatejar/updatejarmeta.sh es-shadow-$version-all.jar"
+}
+
+task renameJar(type: Exec) {
+    workingDir './'
+    commandLine "bash", "-c", "mv build/libs/es-shadow-$version-all.jar  build/libs/es-shadow-${version}.jar "
+//    executable 'sh'
+//    args  "./updatejar/updatejarmeta.sh es-shadow-$version-all.jar"
+}
+
+task changeMeta(type: Exec) {
+    workingDir './'
+    commandLine "python","changemeta/jarservice.py", "args1", "args2"
+}
+
+task makeJar/*(type: Copy) */{
+    doLast {
+        file("libs/es-shadow-${version}.jar").deleteOnExit()
+        file("build/libs/es-shadow-${version}.jar").renameTo("libs/es-shadow-${version}.jar")
+    }
+//    from('build/libs')
+//    into('libs/')
+//    include("es-shadow-${version}.jar")
+//    move ("es-shadow-${version}.jar", "es-shadow-${version}.jar")
+}
+
+//artifacts {
+//    archives file("build/libs/es-shadow-$version-all.jar")
+//}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository( url: nexusUrl) {
+                authentication(userName: "deployment", password: "deployment123")
+            }
+            pom.groupId = "cn.sfck"
+            pom.artifactId = "es-shadow"
+            pom.version = version
+        }
+    }
+}
+
+//shadowJar.dependsOn clean
+
+//shadowJar.dependsOn jar
+makeJar.dependsOn jar
+//shadowJar.dependsOn makeJar
+updateJar.dependsOn shadowJar
+renameJar.dependsOn updateJar
+uploadArchives.dependsOn renameJar

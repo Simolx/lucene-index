@@ -1,0 +1,14 @@
+# lucene-backward-codecs-5.5.2.jar
+org.apache.lucene.sfck.codecs.lucene40.Lucene40Codec
+org.apache.lucene.sfck.codecs.lucene41.Lucene41Codec
+org.apache.lucene.sfck.codecs.lucene42.Lucene42Codec
+org.apache.lucene.sfck.codecs.lucene45.Lucene45Codec
+org.apache.lucene.sfck.codecs.lucene46.Lucene46Codec
+org.apache.lucene.sfck.codecs.lucene49.Lucene49Codec
+org.apache.lucene.sfck.codecs.lucene410.Lucene410Codec
+org.apache.lucene.sfck.codecs.lucene50.Lucene50Codec
+org.apache.lucene.sfck.codecs.lucene53.Lucene53Codec
+
+# lucene-core-5.5.2.jar
+org.apache.lucene.sfck.codecs.lucene54.Lucene54Codec
+
