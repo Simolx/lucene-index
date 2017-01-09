@@ -1,0 +1,6 @@
+# lucene-analyzers-common-5.5.2.jar
+org.apache.lucene.sfck.analysis.charfilter.HTMLStripCharFilterFactory
+org.apache.lucene.sfck.analysis.charfilter.MappingCharFilterFactory
+org.apache.lucene.sfck.analysis.fa.PersianCharFilterFactory
+org.apache.lucene.sfck.analysis.pattern.PatternReplaceCharFilterFactory
+

@@ -1,0 +1,78 @@
+group 'cn.sfck'
+version '2.4.1-SNAPSHOT'
+
+
+buildscript {
+    repositories {
+       maven {
+           url 'http://localhost:18081/repository/jcenter-com/'
+       }
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+//sourceCompatibility = 1.5
+//
+//repositories {
+//    mavenCentral()
+//}
+
+def nexusUrl ="http://localhost:18081/repository/maven-releases/"
+//如果为快照版本发布到Maven Nexus私服的快照库
+if(version.endsWith("-SNAPSHOT")) {
+    nexusUrl ="http://localhost:18081/repository/maven-snapshots/"
+}
+
+dependencies {
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: "$elasticVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+shadowJar {
+    baseName = 'es-shadow'
+    classifier = null
+    version = version
+    relocate 'com.google', 'com.google.sfck'
+    relocate 'com.fasterxml', 'com.fasterxml.sfck'
+    relocate 'org.apache.lucene', 'org.apache.lucene.sfck'
+    relocate 'org.elasticsearch', 'org.elasticsearch.sfck'
+    relocate 'org.joda', 'org.joda.sfck'
+}
+
+task changeMeta(type: Exec) {
+    workingDir './'
+    commandLine "python","changemeta/jarservice.py", "args1", "args2"
+}
+
+task updateJar(type: Exec) {
+    workingDir './'
+    commandLine "bash", "-c", "jar -uvf build/libs/es-shadow-${version}.jar -C changemeta  META-INF "
+}
+
+
+
+//artifacts {
+//    archives file("build/libs/es-shadow-${version}.jar")
+//}
+
+uploadShadow {
+    repositories {
+        mavenDeployer {
+            repository( url: nexusUrl) {
+                authentication(userName: "deployment", password: "deployment123")
+            }
+            pom.groupId = "cn.sfck"
+            pom.artifactId = "es-shadow"
+            pom.version = version
+        }
+    }
+}
+
+updateJar.dependsOn (changeMeta, shadowJar)
+uploadShadow.dependsOn updateJar

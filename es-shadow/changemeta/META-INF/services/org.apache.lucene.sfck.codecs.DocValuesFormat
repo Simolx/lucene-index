@@ -1,0 +1,17 @@
+# lucene-backward-codecs-5.5.2.jar
+org.apache.lucene.sfck.codecs.lucene42.Lucene42DocValuesFormat
+org.apache.lucene.sfck.codecs.lucene45.Lucene45DocValuesFormat
+org.apache.lucene.sfck.codecs.lucene49.Lucene49DocValuesFormat
+org.apache.lucene.sfck.codecs.lucene410.Lucene410DocValuesFormat
+org.apache.lucene.sfck.codecs.lucene50.Lucene50DocValuesFormat
+
+# lucene-core-5.5.2.jar
+org.apache.lucene.sfck.codecs.lucene54.Lucene54DocValuesFormat
+
+# lucene-sandbox-5.5.2.jar
+org.apache.lucene.sfck.bkdtree.BKDTreeDocValuesFormat
+org.apache.lucene.sfck.rangetree.RangeTreeDocValuesFormat
+
+# lucene-spatial3d-5.5.2.jar
+org.apache.lucene.sfck.bkdtree3d.Geo3DDocValuesFormat
+

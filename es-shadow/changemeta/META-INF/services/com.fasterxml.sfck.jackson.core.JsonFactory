@@ -1,0 +1,12 @@
+# jackson-core-2.8.1.jar
+com.fasterxml.sfck.jackson.core.JsonFactory
+
+# jackson-dataformat-cbor-2.8.1.jar
+com.fasterxml.sfck.jackson.dataformat.cbor.CBORFactory
+
+# jackson-dataformat-smile-2.8.1.jar
+com.fasterxml.sfck.jackson.dataformat.smile.SmileFactory
+
+# jackson-dataformat-yaml-2.8.1.jar
+com.fasterxml.sfck.jackson.dataformat.yaml.YAMLFactory
+

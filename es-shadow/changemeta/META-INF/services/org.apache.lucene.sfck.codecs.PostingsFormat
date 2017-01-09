@@ -1,0 +1,13 @@
+# lucene-backward-codecs-5.5.2.jar
+org.apache.lucene.sfck.codecs.lucene40.Lucene40PostingsFormat
+org.apache.lucene.sfck.codecs.lucene41.Lucene41PostingsFormat
+
+# lucene-core-5.5.2.jar
+org.apache.lucene.sfck.codecs.lucene50.Lucene50PostingsFormat
+
+# lucene-sandbox-5.5.2.jar
+org.apache.lucene.sfck.codecs.idversion.IDVersionPostingsFormat
+
+# lucene-suggest-5.5.2.jar
+org.apache.lucene.sfck.search.suggest.document.Completion50PostingsFormat
+

@@ -1,0 +1,65 @@
+group 'cn.sfck'
+version '2.4.1'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+
+//sourceCompatibility = 1.5
+
+//repositories {
+//    mavenCentral()
+//}
+
+def nexusUrl ="http://localhost:18081/repository/maven-releases/"
+//如果为快照版本发布到Maven Nexus私服的快照库
+if(version.endsWith("-SNAPSHOT")) {
+    nexusUrl ="http://localhost:18081/repository/maven-snapshots/"
+}
+
+dependencies {
+    compile group: 'org.elasticsearch', name: 'elasticsearch', version: "$elasticVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+jar {
+//    zip64 true
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: nexusUrl) {
+                authentication(userName: "deployment", password: "deployment123")
+            }
+            pom.version = "$elasticVersion"
+            pom.artifactId = "es-fat"
+            pom.groupId = "cn.sfck"
+        }
+    }
+}
+
+
+//uploadArchives {
+//    configuration = configurations.archives
+//    repositories {
+//        mavenDeployer {
+//            snapshotRepository(url: MAVEN_SNAPSHOT_URL) {
+//                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+//            }
+//
+//            repository(url: MAVEN_URL) {
+//                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+//            }
+//
+//            pom.project {
+//                version rootProject.ext.uploadArchives["lib1"]//版本号
+//                artifactId 'lib1'
+//                groupId GROUP_ID
+//                packaging TYPE
+//                description DESCRIPTION
+//            }
+//        }
+//    }
+//}
